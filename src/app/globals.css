@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*, *::before, *::after{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+@layer utilities {
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+}
+
+:root{
+    --theme-blue: #1A8CD8;
+    --theme-gray: #D9D9D9;
+}
+
+.theme-blue{
+    color: var(--theme-blue);
+}
+
+.theme-bg-blue{
+    background-color: var(--theme-blue);
+}
+
+.theme-blue-fill{
+    fill: var(--theme-blue);
+}
+
+.theme-grey{
+    color: var(--theme-gray);
+}
+
+.theme-bg-grey{
+    background-color: var(--theme-gray);
+}
+
+.theme-border-grey{
+    border-color: var(--theme-gray);
+}
