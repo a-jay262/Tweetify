@@ -50,3 +50,33 @@ export async function PUT(request, content) {
 	}
 }
 
+export async function DELETE(request, content) {
+	try {
+		await mongoose.connect(connectionStr);
+
+		// Extract user ID from the request parameters or body
+		const userId = content.params.user[0];
+
+		// Find the user by ID
+		let user = await User.findById(userId);
+
+		// Check if the user exists
+		if (!user) {
+			return notFoundError();
+		}
+
+		// Set isDeleted to true instead of physically deleting the user
+		user.isDeleted = true;
+
+		// Save the updated user
+		await user.save();
+
+		return NextResponse.json(
+			{ message: 'User marked as deleted successfully' },
+			{ status: 200 }
+		);
+	} catch {
+		internalServerError();
+	}
+}
+
