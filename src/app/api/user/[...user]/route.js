@@ -80,3 +80,34 @@ export async function DELETE(request, content) {
 	}
 }
 
+// Get User with username 
+export async function OPTIONS(request, content) {
+	try {
+		await mongoose.connect(connectionStr);
+		let findUser = await User.findOne({
+			username: content.params.user[0],
+		});
+		if (findUser == null) {
+			return NextResponse.json({ findUser }, { status: 404 });
+		}
+		return NextResponse.json({ findUser }, { status: 200 });
+	} catch {
+		internalServerError();
+	}
+}
+
+// Get User with username 
+export async function PATCH(request, content) {
+	try {
+		await mongoose.connect(connectionStr);
+		let findUser = await User.findOne({
+			_id: content.params.user[0],
+		});
+		if (findUser == null) {
+			return NextResponse.json({ findUser }, { status: 404 });
+		}
+		return NextResponse.json({ findUser }, { status: 200 });
+	} catch {
+		internalServerError();
+	}
+}
