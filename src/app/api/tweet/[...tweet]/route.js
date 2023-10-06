@@ -54,6 +54,38 @@ export async function PUT(request, content) {
 	}
 }
 
+
+export async function DELETE(request, content) {
+	try {
+		await mongoose.connect(connectionStr);
+
+		// Extract tweet ID from the request parameters or body
+		const tweetId = content.params.tweet[0];
+
+		// Find the tweet by ID
+		let tweet = await Tweet.findById(tweetId);
+
+		// Check if the tweet exists
+		if (!tweet) {
+			return notFoundError();
+		}
+
+		// Set isDeleted to true instead of physically deleting the tweet
+		tweet.isDeleted = true;
+
+		// Save the updated tweet
+		await tweet.save();
+
+		return NextResponse.json(
+			{ message: 'Tweet marked as deleted successfully' },
+			{ status: 200 }
+		);
+	} catch {
+		internalServerError();
+	}
+}
+
+
 export async function GET(request, content) {
 	try {
 		await mongoose.connect(connectionStr);
