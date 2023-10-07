@@ -19,4 +19,30 @@ export async function GET(request, content) {
 	}
 }
 
+export async function DELETE(request, content) {
+	try {
+		await mongoose.connect(connectionStr);
 
+		// Extract user ID from the request parameters or body
+		const user_Id = await content.params.tweet[0];
+
+		// Update all tweets of the user to mark them as deleted
+		const result = await Tweet.updateMany(
+			{ userId: user_Id },
+			{
+				$set: {
+					isDeleted: true,
+					updatedAt: new Date().toISOString(),
+				},
+			}
+		);
+
+		// Check if any tweets were updated
+		return NextResponse.json(
+			{ message: 'All tweets of the user marked as deleted successfully' },
+			{ status: 200 }
+		);
+	} catch {
+		internalServerError();
+	}
+}
