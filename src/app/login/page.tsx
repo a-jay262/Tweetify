@@ -33,7 +33,7 @@ export default function page() {
 			if (data.error) {
 			} else {
 				showToast.success('Log in successful');
-				login(data.findUser._id, data.findUser.username)
+				login(data.findUser._id, data.findUser.username);
 				router.push('/home');
 			}
 		} else {
