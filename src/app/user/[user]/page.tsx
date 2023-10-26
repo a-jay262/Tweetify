@@ -27,6 +27,22 @@ export default function page() {
 	const route = usePathname();
 	const userName = route.replace('/user/', '').toLowerCase();
 
+	const [data, setData] = useState<UserDocument | null>(null);
+	const [isLoading, setLoading] = useState(true);
+	useEffect(() => {
+		fetch(`/api/user/${userName}`, {
+			method: 'OPTIONS',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setData(data.findUser);
+				setLoading(false);
+			});
+	}, []);
+
 	if (isLoading)
 		return (
 			<div className=' flex w-full h-[90vh] items-center justify-center'>
