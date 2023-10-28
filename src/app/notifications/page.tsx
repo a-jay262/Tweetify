@@ -14,7 +14,22 @@ export default function Home() {
 		}
 	}, []);
 
-
+	const [data, setData] = useState<[NotificationDocument] | null>(null);
+	const [isLoading, setLoading] = useState(true);
+	useEffect(() => {
+		fetch(`/api/user/notification?user_Id=6561c7219c9ef1451ccebc40`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setData(data.notifications);
+				console.log(data.notifications);
+				setLoading(false);
+			});
+	}, []);
 
 	if (isLoading)
 		return (
