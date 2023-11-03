@@ -21,7 +21,6 @@ export async function GET(request, content) {
 	}
 }
 
-
 export async function PUT(request, content) {
 	try {
 		await mongoose.connect(connectionStr);
