@@ -22,6 +22,6 @@ const RelationModelSchema: Schema = new Schema<RelationDocument>({
 	isDeleted: { type: Boolean, default: false },
 });
 
-export const RelationModel =
+export const Relation =
 	mongoose.models.relation ||
 	mongoose.model<RelationDocument>('relation', RelationModelSchema);

@@ -14,6 +14,6 @@ const PaymentModelSchema: Schema = new Schema<PaymentDocument>({
 	amount: { type: Number, default: 0 },
 });
 
-export const PaymentModel =
+export const payment =
 	mongoose.models.payments ||
 	mongoose.model<PaymentDocument>('payments', PaymentModelSchema);

@@ -16,6 +16,6 @@ const ReportModelSchema: Schema = new Schema<ReportDocument>({
 	isDeleted: { type: Boolean, default: false },
 });
 
-export const ReportModel =
+export const Report =
 	mongoose.models.reports ||
 	mongoose.model<ReportDocument>('reports', ReportModelSchema);
