@@ -30,7 +30,8 @@ const TweetModelSchema: Schema = new Schema<TweetDocument>({
 	likedby: { type: [String], default: [] },
 });
 
-export const TweetModel = mongoose.model<TweetDocument>(
-	'tweet',
-	TweetModelSchema
-);
+export const Tweet =
+	mongoose.models.tweet ||
+	mongoose.model<TweetDocument>('tweet', TweetModelSchema);
+
+	
