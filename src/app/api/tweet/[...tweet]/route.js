@@ -1,7 +1,6 @@
 // Import necessary modules and dependencies
 import mongoose from 'mongoose';
 import { Tweet } from '../../../../lib/model/tweet';
-import { User } from '../../../../lib/model/user';
 import {
 	internalServerError,
 	notFoundError,
@@ -26,7 +25,6 @@ export async function POST(request) {
 
 		// Respond with the created tweet and a 200 status
 		return NextResponse.json({ tweet }, { status: 200 });
-		return NextResponse.json( { status: 200 });
 	} catch {
 		// Handle internal server error in case of an exception
 		internalServerError();

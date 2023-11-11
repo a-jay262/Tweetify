@@ -1,6 +1,6 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-interface RelationDocument extends Document {
+export interface RelationDocument extends Document {
 	firstPerson: string;
 	secondPerson: string;
 	relationType: 'following' | 'block';
