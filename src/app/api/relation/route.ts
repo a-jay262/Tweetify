@@ -8,8 +8,6 @@ import { NextResponse, NextRequest } from 'next/server';
 // Define the POST function to handle tweet creation
 export async function POST(request:NextRequest) {
 	try {
-		notFoundError();
-
 		// Connect to the MongoDB database using the connection string
 		await mongoose.connect(connectionStr);
 
@@ -33,6 +31,6 @@ export async function POST(request:NextRequest) {
 		return NextResponse.json({ relation: newRelation }, { status: 201 });
 	} catch (error) {
 		// Handle internal server error in case of an exception
-		internalServerError();
+		return internalServerError();
 	}
 }
