@@ -40,12 +40,14 @@ export default function Home() {
 
 	if (!data)
 		return (
-			<div className=' flex w-full h-20 items-center justify-center'>
-				<p className='text-2xl'>
-					<span className='font-bold text-4xl'> 404 </span>
-					<span> User not found</span>
-				</p>
-			</div>
+			<main className='h-[100dvh] no-scrollbar overflow-x-auto'>
+				<h2 className='font-bold text-2xl px-3 py-4 pb-2 border-b-2 hidden sm:flex '>
+					Notifications
+				</h2>
+				<div className='items-center flex w-full justify-center mt-4 text-xl text-gray-700'>
+					No Notifications
+				</div>
+			</main>
 		);
 
 	return (
