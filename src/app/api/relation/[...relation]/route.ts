@@ -42,7 +42,6 @@ export async function DELETE(
 	}
 }
 
-
 export async function PUT(request: NextRequest, content: Record<string, any>) {
 	try {
 		// Connect to the MongoDB database using the connection string
@@ -67,6 +66,35 @@ export async function PUT(request: NextRequest, content: Record<string, any>) {
 			{ message: 'Relation updated successfully to mute' },
 			{ status: 200 }
 		);
+	} catch (error) {
+		// Handle internal server error in case of an exception
+		return internalServerError();
+	}
+}
+
+export async function GET(request: NextRequest, content: Record<string, any>) {
+	try {
+		// Connect to the MongoDB database using the connection string
+		await mongoose.connect(connectionStr);
+
+		// Extract user IDs from the request parameters or content
+		const firstUserId = content.params.relation[0];
+		const secondUserId = content.params.relation[1];
+
+		// Find the relation based on the user IDs
+		const relation = await Relation.findOne({
+			firstPerson: firstUserId,
+			secondPerson: secondUserId,
+		});
+
+		// Check if the relation exists
+		if (relation) {
+			// Respond with a success message and a 200 status
+			return NextResponse.json({ hasRelation: true }, { status: 200 });
+		} else {
+			// Respond with a message indicating no relation and a 404 status
+			return notFoundError();
+		}
 	} catch (error) {
 		// Handle internal server error in case of an exception
 		return internalServerError();
