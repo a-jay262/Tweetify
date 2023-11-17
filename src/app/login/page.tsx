@@ -5,12 +5,14 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { showToast } from 'react-next-toast';
 import { login } from '@/utils/Auth/auth';
+import Spinner from '@/components/Spinner';
 
 export default function page() {
 	const router = useRouter();
 
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const [Loading, setLoading] = useState(false);
 
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
@@ -32,6 +34,7 @@ export default function page() {
 			const data = await res.json();
 			if (data.error) {
 			} else {
+				setLoading(true)
 				showToast.success('Log in successful');
 				login(data.findUser._id, data.findUser.username);
 				router.push('/home');
@@ -51,52 +54,58 @@ export default function page() {
 				></img>
 			</Link>
 			<div className='flex-1 flex items-center justify-center my-32 md:my-0'>
-				<div className='flex flex-col sm:border-1 sm:border-gray-400 sm:rounded-2xl sm:p-8 sm:shadow-xl'>
-					<h1 className='text-4xl font-bold'>Happening now</h1>
-					<h2 className='text-2xl font-bold'>Join Tweetify today.</h2>
-					<div className='flex flex-col items-stretch justify-center mt-8'>
-						<p className='first-letter:capitalize font-semibold mt-4'>
-							Enter Your Details
-						</p>
-						<input
-							type='text'
-							className='rounded-full m-2'
-							placeholder='Email / Username'
-							value={username}
-							onChange={(e) => setUsername(e.target.value)}
-							required
-						/>
-						<div className='flex'>
+				{Loading === false ? (
+					<div className='flex flex-col sm:border-1 sm:border-gray-400 sm:rounded-2xl sm:p-8 sm:shadow-xl'>
+						<h1 className='text-4xl font-bold'>Happening now</h1>
+						<h2 className='text-2xl font-bold'>Join Tweetify today.</h2>
+						<div className='flex flex-col items-stretch justify-center mt-8'>
+							<p className='first-letter:capitalize font-semibold mt-4'>
+								Enter Your Details
+							</p>
 							<input
-								type={isPasswordVisible === true ? 'password' : 'text'}
+								type='text'
 								className='rounded-full m-2'
-								placeholder='Password'
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
+								placeholder='Email / Username'
+								value={username}
+								onChange={(e) => setUsername(e.target.value)}
 								required
 							/>
-							<div
-								className='flex flex-row items-center justify-center'
-								onClick={togglePasswordVisibility}
-							>
-								<input type='checkbox' className='m-2' />
+							<div className='flex'>
+								<input
+									type={isPasswordVisible === true ? 'password' : 'text'}
+									className='rounded-full m-2'
+									placeholder='Password'
+									value={password}
+									onChange={(e) => setPassword(e.target.value)}
+									required
+								/>
+								<div
+									className='flex flex-row items-center justify-center'
+									onClick={togglePasswordVisibility}
+								>
+									<input type='checkbox' className='m-2' />
+								</div>
 							</div>
+							<button
+								className='bg-white text-blue-500 rounded-full px-4 py-2 m-2 border-blue-500 border-1 w-auto flex items-center justify-center'
+								type='submit'
+								onClick={handleLogin}
+							>
+								Log in
+							</button>
+							<Link
+								href={'/signup'}
+								className=' bg-blue-500 text-white rounded-full px-4 py-2 m-2 w-auto flex items-center justify-center'
+							>
+								Create account
+							</Link>
 						</div>
-						<button
-							className='bg-white text-blue-500 rounded-full px-4 py-2 m-2 border-blue-500 border-1 w-auto flex items-center justify-center'
-							type='submit'
-							onClick={handleLogin}
-						>
-							Log in
-						</button>
-						<Link
-							href={'/signup'}
-							className=' bg-blue-500 text-white rounded-full px-4 py-2 m-2 w-auto flex items-center justify-center'
-						>
-							Create account
-						</Link>
 					</div>
-				</div>
+				) : (
+					<div className='flex flex-col sm:border-1 sm:border-gray-400 sm:rounded-2xl sm:p-8 sm:shadow-xl'>
+						<Spinner size={70} />
+					</div>
+				)}
 			</div>
 		</div>
 	);
